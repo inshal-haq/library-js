@@ -1,0 +1,40 @@
+/* GENERAL */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+
+.header {
+  height: 80px;
+  background-color: antiquewhite;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header h1 {
+  font-weight: 500;
+}
+
+/* MAIN */
+
+.main {
+  flex: 1;
+  background-color: #fefeff;
+}
