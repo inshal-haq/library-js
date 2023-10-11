@@ -17,6 +17,7 @@ showDialogBtn.addEventListener('click', () => {
 
 addBookBtn.addEventListener('click', e => {
   addBook(e);
+  showBooks();
 });
 
 // constructor
@@ -28,10 +29,8 @@ function Book(title, author, pages, read) {
 }
 
 // constructor method
-Book.prototype.info = function() {
-  return (this.read) ? 
-    `${this.title} by ${this.author}, ${this.pages} pages, have read` :
-    `${this.title} by ${this.author}, ${this.pages} pages, not read yet` ;
+Book.prototype.toggleRead = function() {
+  this.read = !this.read
 }
 
 // functions
@@ -44,8 +43,10 @@ function showBooks() {
         <div class="column-item">${book.title}</div>
         <div class="column-item">${book.author}</div>
         <div class="column-item">${book.pages}</div>
-        <div class="column-item">${book.read}</div>
-        <div class="remove-container">
+        <div class="button-container">
+          <button data-book-index="${index}" class="read-button">${book.read}</button>
+        </div>
+        <div class="button-container">
             <button data-book-index="${index}" class="remove-book-button">X</button>
         </div>
       </div>
@@ -56,13 +57,22 @@ function showBooks() {
     .innerHTML = booksHTML;
 
   document.querySelectorAll('.remove-book-button')
-  .forEach(removeBtn => {
-    removeBtn.addEventListener('click', () => {
-      const { bookIndex } = removeBtn.dataset;
-      removeBook(bookIndex);
-      showBooks();
+    .forEach(removeBtn => {
+      removeBtn.addEventListener('click', () => {
+        const { bookIndex } = removeBtn.dataset;
+        removeBook(bookIndex);
+        showBooks();
+      });
     });
-  });
+
+  document.querySelectorAll('.read-button')
+    .forEach(readBtn => {
+      readBtn.addEventListener('click', () => {
+        const { bookIndex } = readBtn.dataset;
+        myLibrary[bookIndex].toggleRead();
+        showBooks();
+      });
+    });   
 }
 
 function addBook(e) {
@@ -74,7 +84,6 @@ function addBook(e) {
 
   const book = new Book(title, author, pages, read);
   myLibrary.push(book);
-  showBooks();
   dialog.close();
 }
 
